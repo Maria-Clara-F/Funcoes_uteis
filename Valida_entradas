@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+// 1. Ler e validar números inteiros
+int ler_inteiro(const char *palavra) {
+    int valor;
+    char buffer[100];
+    while (1) {
+        printf("%s", palavra);
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            char extra;
+            // sscanf tenta ler um inteiro e verifica se sobrou algo inválido na linha
+            if (sscanf(buffer, "%d %c", &valor, &extra) == 1) {
+                return valor;
+            }
+        }
+        // printf("Por favor, digite apenas um número inteiro válido.\n");
+    }
+}
+
+// 2. Ler número dentro de um intervalo específico
+int ler_numero_intervalo(const char *palavra, int minimo, int maximo) {
+    int valor;
+    while (1) {
+        valor = ler_inteiro(palavra);
+        if (valor >= minimo && valor <= maximo) {
+            return valor;
+        }
+        // printf("O valor deve estar entre %d e %d.\n", minimo, maximo);
+    }
+}
+
+// 3. Remover espaços extras (início, fim e meio)
+void limpar_espacos(char *str) {
+    int i = 0, j = 0;
+    
+    // Pula espaços iniciais
+    while (str[i] != '\0' && isspace((unsigned char)str[i])) {
+        i++;
+    }
+    
+    int em_espaco = 0;
+    while (str[i] != '\0') {
+        if (isspace((unsigned char)str[i])) {
+            if (!em_espaco && j > 0) {
+                str[j++] = ' ';
+                em_espaco = 1;
+            }
+        } else {
+            str[j++] = str[i];
+            em_espaco = 0;
+        }
+        i++;
+    }
+    
+    // Remove espaço final, se houver
+    if (j > 0 && str[j - 1] == ' ') {
+        j--;
+    }
+    str[j] = '\0';
+}
+
+// 4. Converter para maiúsculas e minúsculas
+void para_maiusculo(char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        str[i] = toupper((unsigned char)str[i]);
+    }
+}
+
+void para_minusculo(char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        str[i] = tolower((unsigned char)str[i]);
+    }
+}
+
+// 5. Ler string limpa (lê do usuário e já limpa os espaços)
+void ler_string_limpa(const char *mensagem, char *buffer, int tamanho) {
+    printf("%s", mensagem);
+    if (fgets(buffer, tamanho, stdin) != NULL) {
+        // Remove a quebra de linha (\n) capturada pelo fgets
+        buffer[strcspn(buffer, "\n")] = '\0';
+        limpar_espacos(buffer);
+    }
+}
+}
