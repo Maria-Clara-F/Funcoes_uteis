@@ -1,0 +1,40 @@
+#include <stdio.h> 
+#define TAM_VETOR 12
+
+int main () {
+    int vetor[TAM_VETOR];
+
+    for(int i = 0; i < TAM_VETOR; i++){
+        scanf("%d", &vetor[i]);
+    }
+
+    /* printf("vetor: ");
+
+    for(int i = 0; i < TAM_VETOR; i++) {
+        printf("%d ", vetor[i]);
+    }
+    printf("\n\n");
+    */
+
+    int j = 0;
+    for(int i = 0; i < TAM_VETOR; i++) {
+    if(vetor[i] != 0) {
+        vetor[j] = vetor[i];
+        j++;
+    }
+    }    
+
+    while(j < TAM_VETOR) {
+        vetor[j] = 0;
+        j++;    
+    }
+
+    /* printf("vetor: ");
+
+    for(int i = 0; i < TAM_VETOR; i++) {
+        printf("%d ", vetor[i]);
+    }
+    */
+
+    return 0;
+}
